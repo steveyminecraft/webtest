@@ -8,4 +8,5 @@
     mode: 'a+x'
 
 - name: "Deploy script"
-  script: "{{ project_dir}}/deployment.sh"
+  command: >
+    {{ project_dir}}/deployment.sh
