@@ -1,3 +1,5 @@
 ---
-- name: "TEST"
+- name: "Setup deployment files"
   include_tasks: "setup_templates.yml"
+- name: "Use deplyoment files"
+  include_tasks: "setup_cluster.yml"
