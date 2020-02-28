@@ -1,0 +1,2 @@
+[minikube]
+server1 ansible_host=128.1.1.164 ansible_user=richard

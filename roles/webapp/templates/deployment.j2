@@ -1,0 +1,6 @@
+#!/bin/bash
+
+for var in namespace ingress frontend service1 serivce2 service3
+do
+  kubectl create -f {{ project_dir }}/$var.yml
+done

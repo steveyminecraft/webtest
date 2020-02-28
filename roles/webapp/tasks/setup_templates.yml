@@ -1,0 +1,41 @@
+---
+- name: "Create project folder"
+  file:
+    path: "{{ project_dir }}"
+    state: "directory"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: '0755'
+
+- name: "Adding name space"
+  template:
+    src: "namespace.j2"
+    dest: "{{ project_dir }}/namespace.yml"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: '0644'
+
+- name: "Adding {{ item }}"
+  template:
+    src: "service.j2"
+    dest: "{{ project_dir }}/{{ item.name }}.yml"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: '0644'
+  with_items: "{{ services }}"
+
+- name: "Adding front end"
+  template:
+    src: "frontend.j2"
+    dest: "{{ project_dir }}/frontend.yml"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: '0664'
+
+- name: "Adding ingress"
+  template:
+    src: "ingress.j2"
+    dest: "{{ project_dir }}/ingress.yml"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: '0644'

@@ -1,0 +1,32 @@
+---
+apiVersion: "networking.k8s.io/v1beta1"
+kind: "Ingress"
+metadata:
+  name: "webtest-ingress"
+  namespace: "{{ namespace }}"
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  backend:
+    serviceName: "default-http-backend"
+    servicePort: {{ front_port }}
+  rules:
+  - host: "{{ project_dns_name }}"
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: "{{ front_name }}"
+          servicePort: {{ front_port }}
+      - path: "{{ front_env1_value }}"
+        backend:
+          serviceName: "{{ services.0.name }}"
+          servicePort: {{ services.0.port }}
+      - path: "{{ front_env2_value }}"
+        backend:
+          serviceName: "{{ services.1.name }}"
+          servicePort: {{ services.1.port }}
+      - path: "{{ front_env3_value }}"
+        backend:
+          serviceName: "{{ services.2.name }}"
+          servicePort: {{ services.2.port }}

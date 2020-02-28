@@ -1,0 +1,36 @@
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "{{ item.name }}"
+  namespace: "{{ namespace }}"
+spec:
+  selector:
+    matchLabels:
+      app: "{{ item.name }}"
+  minReadySeconds: 5
+  template:
+    metadata:
+      labels:
+        app: "{{ item.name }}"
+    spec:
+      containers:
+        - name: "{{ item.name }}"
+          image: "gregigs/igs-{{ item.name }}"
+          ports:
+            - containerPort: {{ item.port }}
+---
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  name: "{{ item.name }}"
+  namespace: "{{ namespace }}"
+spec:
+  selector:
+    app: "{{ item.name }}"
+  type: NodePort
+  ports:
+    - name: "{{ item.name }}"
+      protocol: "TCP"
+      port: {{ item.port }}
+      nodePort: {{ item.external_port }}

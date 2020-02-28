@@ -1,0 +1,11 @@
+---
+- name: "Add the deployment to the project dir"
+  template:
+    src: "deployment.j2"
+    dest: "{{ project_dir }}/deployment.sh"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: 'a+x'
+
+- name: "Deploy script"
+  script: "{{ project_dir}}/deployment.sh"

@@ -1,0 +1,6 @@
+---
+- hosts: "minikube"
+  become: no
+  gather_facts: yes
+  roles:
+    - roles/webapp

@@ -1,0 +1,25 @@
+---
+project_dns_name: "webtest.info"
+namespace: "webtest"
+project_dir: "/tmp/webtest"
+# Change this
+user_name: "richard"
+
+# Front Application Settings
+front_name: "frontend"
+front_image: "gregigs/igs-frontend"
+front_port: 80
+front_env1_value: "/api/service1"
+front_env2_value: "/api/service2"
+front_env3_value: "/api/service3"
+
+services:
+  - name: "service1"
+    port: 5000
+    external_port: 30001
+  - name: "service2"
+    port: 5000
+    external_port: 30002
+  - name: "service3"
+    port: 5000
+    external_port: 30003

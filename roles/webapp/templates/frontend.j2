@@ -1,0 +1,42 @@
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "{{ front_name }}"
+  namespace: "{{ namespace }}"
+spec:
+  selector:
+    matchLabels:
+      app: "{{ front_name }}"
+  minReadySeconds: 5
+  template:
+    metadata:
+      labels:
+        app: "{{ front_name }}"
+    spec:
+      containers:
+        - name: "{{ front_name }}"
+          image: "gregigs/igs-{{ front_name }}"
+          ports:
+            - containerPort: {{ front_port }}
+          env:
+            - name: "ASPNETCORE_Service1"
+              value: "http://{{project_dns_name }}:{{ services.0.external_port  }}{{ front_env1_value }}"
+            - name: "ASPNETCORE_Service2"
+              value: "http://{{ project_dns_name }}:{{ services.1.external_port }}{{ front_env2_value}}"
+            - name: "ASPNETCORE_Service3"
+              value: "http://{{ project_dns_name }}:{{ services.2.external_port  }}{{ front_env3_value}}"
+---
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  name: "{{ front_name }}"
+  namespace: "{{ namespace }}"
+spec:
+  selector:
+    app: "{{ front_name }}"
+  ports:
+    - name: "{{ front_name }}"
+      protocol: "TCP"
+      port: {{ front_port }}
+      targetPort: {{ front_port }}
